@@ -6,6 +6,8 @@ let thirdImgElement=document.getElementById('third-image');
 
 let resultElement=document.getElementById('btn');
 
+let roundsControl = document.getElementById('btn2');
+
 let firstImgIndex ;
 let secondImgIndex;
 let thirdImgIndex;
@@ -98,7 +100,12 @@ renderImgs();
 firstImgElement.addEventListener('click',userClicking);
 secondImgElement.addEventListener('click',userClicking);
 thirdImgElement.addEventListener('click',userClicking);
+roundsControl.addEventListener('click',usersRoundsControl);
 
+function usersRoundsControl(event){
+    let userRound = prompt("Please enter your rounds");
+    maxAttempts=userRound;
+}
 
 function userClicking(event){
     // console.log(event.target.id);
@@ -125,6 +132,7 @@ function userClicking(event){
 
             resultElement.addEventListener('click',resultShowing);
             
+            roundsControl.removeEventListener('click',usersRoundsControl);
 
     
             }
