@@ -19,13 +19,23 @@ let counter=0;
 
 let allProducts=[];
 
+let productName=[];
+let productVotes=[];
+let productShown=[];
+
+let myArray=[];
+// let myArray2=[];
+
+
 function ProductsImg(name,source){
 this.name=name;
 this.source=source;
 this.showTimes=0;
 this.views=0;
 
+
 allProducts.push(this);
+productName.push(this.name);
 }
 
 new ProductsImg('bag','imgs/bag.jpg');
@@ -64,8 +74,9 @@ function renderImgs(){
      do {
         firstImgIndex = generateRandomIndex();
         secondImgIndex=generateRandomIndex();
+        thirdImgIndex = generateRandomIndex();
     }
-     while (firstImgIndex === secondImgIndex || secondImgIndex===thirdImgIndex || firstImgIndex===thirdImgIndex);
+     while (firstImgIndex === secondImgIndex || secondImgIndex===thirdImgIndex || firstImgIndex===thirdImgIndex || myArray.includes(firstImgIndex)|| myArray.includes(secondImgIndex)||myArray.includes(thirdImgIndex));
 
     //  console.log(firstImgIndex);
     //  console.log(secondImgIndex);
@@ -76,15 +87,32 @@ function renderImgs(){
     //  console.log(allProducts[secondImgIndex]);
     //  console.log(allProducts[thirdImgIndex]);
 
+   
+    myArray[0] = firstImgIndex;
+    myArray[1] = secondImgIndex;
+    myArray[2] = thirdImgIndex;
+
+
 
    firstImgElement.src=allProducts[firstImgIndex].source;
-   console.log(allProducts[firstImgIndex].name);
-
    secondImgElement.src=allProducts[secondImgIndex].source;
-   console.log(allProducts[secondImgIndex].name);
-
    thirdImgElement.src=allProducts[thirdImgIndex].source;
-   console.log(allProducts[thirdImgIndex].name);
+
+
+firstImgElement.alt=allProducts[firstImgIndex].name;
+secondImgElement.alt=allProducts[secondImgIndex].name;
+thirdImgElement.alt=allProducts[thirdImgIndex].name;
+// compareImgs();
+// console.log(compareImgs);
+
+// myArray2.push(firstImgElement.alt);
+// myArray2.push(secondImgElement.alt);
+// myArray2.push(thirdImgElement.alt);
+// console.log(myArray2);
+
+
+
+
 
 
 
@@ -96,6 +124,9 @@ function renderImgs(){
 
 }
 renderImgs();
+
+
+
 
 firstImgElement.addEventListener('click',userClicking);
 secondImgElement.addEventListener('click',userClicking);
@@ -133,23 +164,65 @@ function userClicking(event){
             resultElement.addEventListener('click',resultShowing);
             
             roundsControl.removeEventListener('click',usersRoundsControl);
-
-    
+           
             }
-        }
+          
         
-    
+}
 
     function resultShowing(event){
         
-        let list = document.getElementById('result');
-        let liElement;
-        for (let i = 0; i < allProducts.length; i++) {
-            liElement = document.createElement('li');
-            list.appendChild(liElement);
-            liElement.textContent = `${allProducts[i].name} had ${allProducts[i].showTimes}  votes, and was seen ${allProducts[i].views} times.`;
+    //     let list = document.getElementById('result');
+    //     let liElement;
+    //     for (let i = 0; i < allProducts.length; i++) {
+    //         liElement = document.createElement('li');
+    //         list.appendChild(liElement);
+    //         liElement.textContent = `${allProducts[i].name} had ${allProducts[i].showTimes}  votes, and was seen ${allProducts[i].views} times.`;
 
+    // }
+     for (let i = 0; i < allProducts.length; i++) {
+        productVotes.push(allProducts[i].showTimes);
+        productShown.push(allProducts[i].views);
+        
     }
+    viewChart();
+    
+
+
+
     resultElement.removeEventListener('click', resultShowing);
 }
-console.log(allProducts);
+// console.log(allProducts);
+
+function viewChart() {
+
+    let ctx = document.getElementById('myChart').getContext('2d');
+    let myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: productName,
+            datasets: [{
+                    label: '# of Votes',
+                    data: productVotes,
+                    backgroundColor: 'rgb(60, 179, 113)',
+                    borderColor: 'rgb(60, 179, 113)',
+                    borderWidth: 1
+                },
+                {
+                    label: '# of shown',
+                    data: productShown,
+                    backgroundColor: 'rgb(106, 90, 205)',
+                    borderColor: 'rgb(106, 90, 205)'
+                    
+                }
+            ]
+        },
+        options: {
+
+        }
+    });
+
+}
+// console.log('names', productName);
+// console.log('votes', productVotes);
+// console.log('shown', productShown);
