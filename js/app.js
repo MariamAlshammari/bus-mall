@@ -172,14 +172,14 @@ function userClicking(event){
 
     function resultShowing(event){
         
-    //     let list = document.getElementById('result');
-    //     let liElement;
-    //     for (let i = 0; i < allProducts.length; i++) {
-    //         liElement = document.createElement('li');
-    //         list.appendChild(liElement);
-    //         liElement.textContent = `${allProducts[i].name} had ${allProducts[i].showTimes}  votes, and was seen ${allProducts[i].views} times.`;
+        let list = document.getElementById('result');
+        let liElement;
+        for (let i = 0; i < allProducts.length; i++) {
+            liElement = document.createElement('li');
+            list.appendChild(liElement);
+            liElement.textContent = `${allProducts[i].name} had ${allProducts[i].showTimes}  votes, and was seen ${allProducts[i].views} times.`;
 
-    // }
+    }
      for (let i = 0; i < allProducts.length; i++) {
         productVotes.push(allProducts[i].showTimes);
         productShown.push(allProducts[i].views);
